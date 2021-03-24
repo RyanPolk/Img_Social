@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2021 at 05:09 PM
+-- Generation Time: Mar 24, 2021 at 09:49 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -31,7 +31,7 @@ CREATE TABLE `comments` (
   `commentID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `postID` int(11) NOT NULL,
-  `comment` varchar(100) DEFAULT NULL,
+  `comment` varchar(250) DEFAULT NULL,
   `commented` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -57,8 +57,8 @@ CREATE TABLE `likes` (
 CREATE TABLE `posts` (
   `postID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `postImg` blob NOT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `postImg` mediumblob NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
   `posted` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -74,7 +74,7 @@ CREATE TABLE `users` (
   `password` varchar(25) DEFAULT NULL,
   `firstName` varchar(25) DEFAULT NULL,
   `registered` datetime NOT NULL DEFAULT current_timestamp(),
-  `profileImg` blob DEFAULT NULL
+  `profileImg` mediumblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

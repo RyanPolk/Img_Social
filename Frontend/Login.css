@@ -1,17 +1,17 @@
-
 /* BASIC */
 
 html {
-    background-color: #ffffff;
+    background-color: #1b262c;
   }
   
   body {
     font-family: "Poppins", sans-serif;
     height: 50vh;
+    background-color: #1b262c;
   }
   
   a {
-    color: #92badd;
+    color: #ffffff;
     display:inline-block;
     text-decoration: none;
     font-weight: 400;
@@ -24,12 +24,13 @@ html {
     text-transform: uppercase;
     display:inline-block;
     margin: 40px 8px 10px 8px; 
-    color: #cccccc;
+    color: #1b262c;
   }
 
   h3 {
       padding-top: 10pt;
       font-size: 18pt;
+      color:#ffffff;
   }
   
   
@@ -49,7 +50,7 @@ html {
   #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: #fff;
+    background: #17a2b8;
     padding: 30px;
     width: 90%;
     max-width: 450px;
@@ -61,8 +62,8 @@ html {
   }
   
   #formFooter {
-    background-color: #f6f6f6;
-    border-top: 1px solid #dce8f1;
+    background-color: #17a2b8;
+    border-top: 1px solid #17a2b8;
     padding: 25px;
     text-align: center;
     -webkit-border-radius: 0 0 10px 10px;
@@ -87,7 +88,7 @@ html {
   /* FORM TYPOGRAPHY*/
   
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #1b262c;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -109,7 +110,7 @@ html {
   }
   
   input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-    background-color: #39ace7;
+    background-color: #1b262c;
   }
   
   input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
@@ -121,9 +122,9 @@ html {
   }
   
   input[type=text] {
-    background-color: #f6f6f6;
+    background-color: #1b262c;
     border: none;
-    color: #0d0d0d;
+    color: #ffffff;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -131,7 +132,7 @@ html {
     font-size: 16px;
     margin: 5px;
     width: 85%;
-    border: 2px solid #f6f6f6;
+    border: 2px solid #ffffff;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -ms-transition: all 0.5s ease-in-out;
@@ -142,8 +143,8 @@ html {
   }
   
   input[type=text]:focus {
-    background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    background-color: #1b262c;
+    border-bottom: 2px solid #1b262c;
   }
   
   input[type=text]:placeholder {

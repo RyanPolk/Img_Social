@@ -9,6 +9,7 @@
         <!--Initialization lines-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
+        <link rel="stylesheet" href="Login.css">
         <script src="Home.js"></script>
     </head>
     <body>
@@ -22,16 +23,54 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <span class="navbar-text">
-                    <a class="nav-link" href="Login.html">Login</a>
-                </span>
-                <span class="navbar-text">
-                    <a class="nav-link" href="Signup.html">Signup</a>
+                    <a class="nav-link" href="Login.html">Login/Sign up</a>
                 </span>
             </div>
         </nav>
 
         <!--Below content code-->
-        <p>Login</p>
-            
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="wrapper fadeInDown">
+                        <div id="formContent">
+                            <!-- Title -->
+                            <div class="fadeIn first">
+                                <h3>Login</h3>
+                            </div>
+                        
+                            <!-- Login Form -->
+                            <form>
+                                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+                                <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
+                                <p style="padding-top: 38pt;"></p>
+                                <input type="submit" class="fadeIn fourth" value="Login">
+                            </form>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="wrapper fadeInDown">
+                        <div id="formContent">
+                            <!-- Title -->
+                            <div class="fadeIn first">
+                                <h3>Sign up</h3>
+                            </div>
+                        
+                            <!-- Login Form -->
+                            <form>
+                                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+                                <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
+                                <input type="text" id="password" class="fadeIn fourth" name="confirmPass" placeholder="Confirm Password">
+                                <input type="submit" class="fadeIn fourth" value="Sign up">
+                            </form>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+
+        
     </body>
  </html>

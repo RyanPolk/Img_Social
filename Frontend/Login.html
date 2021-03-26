@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
     <head>
-        <!--These 4 lines need to be included for bootstrap functionality-->
+        <!--These 5 lines need to be included for bootstrap functionality-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!--Initialization lines-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
+        <link rel="icon" type="image/png" href="./Images/ic_logo.png"/>
         <link rel="stylesheet" href="Login.css">
-        <script src="Home.js"></script>
+        <!-- JavaScript for login and signup -->
+        <script>
+            function login() {
+                var sUsername = document.getElementById("lUsername").value;
+                var sPassword = document.getElementById("lPassword").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "Login.php?username=" + sUsername +"&password=" + sPassword, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            displayUserInfo(xhttp.responseText);
+                        } else {
+                            displayUserInfo("An error occurred: " + xhttp.statusText); 
+                        }
+                    }
+                };
+                xhttp.send(null);
+            }
+
+            function signup() {
+                var sUsername = document.getElementById("sUsername").value;
+                var sPassword = document.getElementById("sPassword").value;
+                var sConfirmPass = document.getElementById("sConfirmPass").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "Signup.php?username=" + sUsername +"&password=" + sPassword+"&confirmPass=" + sConfirmPass, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            displayUserInfo(xhttp.responseText);
+                        } else {
+                            displayUserInfo("An error occurred: " + xhttp.statusText); 
+                        }
+                    }
+                };
+                xhttp.send(null);
+            }
+
+            function displayUserInfo(sText) {
+                var divCustomerInfo = document.getElementById("divUserInfo");
+                divCustomerInfo.innerHTML = sText;
+                console.log(sText);
+            }
+        </script>
     </head>
     <body>
         <!--Navbar code-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+            <img class="navbar-brand" href="Home.html" src="./Images/ic_logo.png" style="width: 40pt;"></img>
             <a class="navbar-brand" href="Home.html">Img Social</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -23,7 +68,7 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <span class="navbar-text">
-                    <a class="nav-link" href="Login.html">Login/Sign up</a>
+                    <a href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c;">Login/Sign up</a>
                 </span>
             </div>
         </nav>
@@ -39,13 +84,11 @@
                                 <h3>Login</h3>
                             </div>
                         
-                            <!-- Login Form -->
-                            <form>
-                                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
-                                <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
-                                <p style="padding-top: 38pt;"></p>
-                                <input type="submit" class="fadeIn fourth" value="Login">
-                            </form>
+                            <!-- Login Controls -->
+                            <input type="text" id="lUsername" class="fadeIn second" name="lUsername" placeholder="Username">
+                            <input type="password" id="lPassword" class="fadeIn third" name="lPassword" placeholder="Password">
+                            <p style="padding-top: 38pt;"></p>
+                            <input type="submit" class="fadeIn fourth" value="Login" onclick="login()">
                         </div>
                       </div>
                 </div>
@@ -57,20 +100,46 @@
                                 <h3>Sign up</h3>
                             </div>
                         
-                            <!-- Login Form -->
-                            <form>
-                                <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
-                                <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
-                                <input type="text" id="password" class="fadeIn fourth" name="confirmPass" placeholder="Confirm Password">
-                                <input type="submit" class="fadeIn fourth" value="Sign up">
-                            </form>
+                            <!-- Signup Controls -->
+                            <input type="text" id="sUsername" class="fadeIn second" name="sUsername" placeholder="Username">
+                            <input type="password" id="sPassword" class="fadeIn third" name="sPassword" placeholder="Password">
+                            <input type="password" id="sConfirmPass" class="fadeIn fourth" name="sConfirmPass" placeholder="Confirm Password">
+                            <input type="submit" class="fadeIn fourth" value="Sign up" onclick="signup()">
+                            
                         </div>
                       </div>
                 </div>
             </div>
         </div>
-
-
         
+        <!-- Target area: Temp -->
+        <div id="divUserInfo" style="color: #ffffff;"></div>
+
+        <!-- Footer -->
+        <footer class="bg-info text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-1">
+                <!-- Section: Social media -->
+                <section>
+                    <!-- Facebook -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fa fa-facebook-f"></i
+                    ></a>
+            
+                    <!-- Github -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fa fa-github"></i
+                    ></a>
+                </section>
+                <!-- Section: Social media -->
+            
+                <!-- Section: Text -->
+                <section>
+                    <h6>© 2021 Copyright: <a href="./Home.html">Img Social</a></h6>
+                </section>
+                <!-- Section: Text -->
+            </div>
+            <!-- Grid container -->
+        </footer>
     </body>
  </html>

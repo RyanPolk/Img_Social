@@ -6,14 +6,17 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!--Initialization lines-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
         <link rel="stylesheet" href="Home.css">
         <script>
 			function getImages() {
+        // Checks to see if the user is logged in
+        checkUser()
+
 				console.log("Hello.");
-				
 				var xhttp = new XMLHttpRequest();
 				xhttp.open("get", "Home.php", true);
 				xhttp.onreadystatechange = function () {
@@ -46,24 +49,55 @@
 					c++;
 				}
 			}
+
+      //Gets called onLoad, checks to see if the user is logged in
+      function checkUser() {
+        // Read Cookie and set navigation buttons
+        var nameEQ = "currentUser=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) {
+                var currentUser = c.substring(nameEQ.length,c.length);
+                // Hide login/signup button and unhide post/profile buttons
+                var x = document.getElementById("login");
+                var y = document.getElementById("profile");
+                var z = document.getElementById("post");
+                y.innerHTML = currentUser;
+                if (currentUser == "" && currentUser == "Login failed, please try again." && currentUser == "Password's do not match!" && currentUser != "Username and/or password cannot be empty!") {
+                    x.style.display = "inline";
+                    y.style.display = "none";
+                    z.style.display = "none";
+                } else {
+                    x.style.display = "none";
+                    y.style.display = "inline";
+                    z.style.display = "inline";
+                }
+            }
+        }
+    }
 		</script>
     </head>
     <body onload="getImages()">
 	
         <!--Navbar code-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-            <a class="navbar-brand" href="Home.html">Img Social</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                </ul>
-                <span class="navbar-text">
-                    <a class="nav-link" href="Login.html">Login/Sign up</a>
-                </span>
-            </div>
-        </nav>
+          <img class="navbar-brand" href="Home.html" src="./Images/ic_logo.png" style="width: 40pt;"></img>
+          <a class="navbar-brand" href="Home.html">Img Social</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+              </ul>
+              <span class="navbar-text">
+                  <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c;">Login/Sign up</a>
+                  <a id="post" href="" class="btn btn-primary text-light" style="background-color: #1b262c;">Post</a>
+                  <a id="profile" href="" class="btn btn-primary text-light" style="background-color: #1b262c;">Profile</a>
+              </span>
+          </div>
+      </nav>
 		
 		
         <!--Below content code-->
@@ -115,6 +149,33 @@
               </td>
             </tr>
           </table>
+
+      <!-- Footer -->
+      <footer class="bg-info text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-1">
+            <!-- Section: Social media -->
+            <section>
+                <!-- Facebook -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-facebook-f"></i
+                ></a>
+        
+                <!-- Github -->
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                ><i class="fa fa-github"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
+        
+            <!-- Section: Text -->
+            <section>
+                <h6>© 2021 Copyright: <a href="./Home.html">Img Social</a></h6>
+            </section>
+            <!-- Section: Text -->
+        </div>
+        <!-- Grid container -->
+    </footer>
             
     </body>
  </html>

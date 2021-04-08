@@ -33,3 +33,14 @@ table td, table td * {
 body {
 	background-color: #1b262c;
 }
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: gray;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    }

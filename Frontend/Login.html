@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="Login.css">
         <!-- JavaScript for login and signup -->
         <script>
+            // Takes login parameters and calls login.php
             function login() {
                 var sUsername = document.getElementById("lUsername").value;
                 var sPassword = document.getElementById("lPassword").value;
@@ -22,15 +23,14 @@
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
-                            displayUserInfo(xhttp.responseText);
-                        } else {
-                            displayUserInfo("An error occurred: " + xhttp.statusText); 
+                            verified(xhttp.responseText);
                         }
                     }
                 };
                 xhttp.send(null);
             }
 
+            // Takes signup parameters and calls signup.php
             function signup() {
                 var sUsername = document.getElementById("sUsername").value;
                 var sPassword = document.getElementById("sPassword").value;
@@ -40,23 +40,55 @@
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
-                            displayUserInfo(xhttp.responseText);
-                        } else {
-                            displayUserInfo("An error occurred: " + xhttp.statusText); 
-                        }
+                            verified(xhttp.responseText);
+                        } 
                     }
                 };
                 xhttp.send(null);
             }
 
-            function displayUserInfo(sText) {
+            // Displays result string to the screen, writes cookies, and redirects user
+            function verified(result) {
+                // Write response to screen
                 var divCustomerInfo = document.getElementById("divUserInfo");
-                divCustomerInfo.innerHTML = sText;
-                console.log(sText);
+                divCustomerInfo.innerHTML = result;
+                // Write cookie and redirect to homepage
+                if (result != "" && result != "Login failed, please try again." && result != "Password's do not match!" && result != "Username and/or password cannot be empty!") {
+                    document.cookie = "currentUser=" + result + "; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/";
+                    window.location.replace("Home.html");
+                }
+            }
+
+            //Gets called onLoad, checks to see if the user is logged in
+            function checkUser() {
+                // Read Cookie and set navigation buttons
+                var nameEQ = "currentUser=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) {
+                        var currentUser = c.substring(nameEQ.length,c.length);
+                        // Hide login/signup button and unhide post/profile buttons
+                        var x = document.getElementById("login");
+                        var y = document.getElementById("profile");
+                        var z = document.getElementById("post");
+                        y.innerHTML = currentUser;
+                        if (currentUser == "" && currentUser == "Login failed, please try again." && currentUser == "Password's do not match!" && currentUser != "Username and/or password cannot be empty!") {
+                            x.style.visibility = "visible";
+                            y.style.visibility = "hidden";
+                            z.style.visibility = "hidden";
+                        } else {
+                            x.style.visibility = "hidden";
+                            y.style.visibility = "visible";
+                            z.style.visibility = "visible";
+                        }
+                    }
+                }
             }
         </script>
     </head>
-    <body>
+    <body onload="checkUser()">
         <!--Navbar code-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-info">
             <img class="navbar-brand" href="Home.html" src="./Images/ic_logo.png" style="width: 40pt;"></img>
@@ -68,7 +100,9 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <span class="navbar-text">
-                    <a href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c;">Login/Sign up</a>
+                    <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: visible;">Login/Sign up</a>
+                    <a id="post" href="" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Post</a>
+                    <a id="profile" href="" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Profile</a>
                 </span>
             </div>
         </nav>
@@ -105,7 +139,6 @@
                             <input type="password" id="sPassword" class="fadeIn third" name="sPassword" placeholder="Password">
                             <input type="password" id="sConfirmPass" class="fadeIn fourth" name="sConfirmPass" placeholder="Confirm Password">
                             <input type="submit" class="fadeIn fourth" value="Sign up" onclick="signup()">
-                            
                         </div>
                       </div>
                 </div>
@@ -113,7 +146,7 @@
         </div>
         
         <!-- Target area: Temp -->
-        <div id="divUserInfo" style="color: #ffffff;"></div>
+        <div id="divUserInfo" style="color: #ffffff; text-align: center;"></div>
 
         <!-- Footer -->
         <footer class="bg-info text-center text-white">

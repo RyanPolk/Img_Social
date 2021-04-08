@@ -6,6 +6,12 @@
     $sPassword = $_GET["password"];
     $sConfirmPass = $_GET["confirmPass"];
 
+    //Check if username and password field is blank
+    if (strcmp($sUsername, "") == 0 || strcmp($sPassword, "") == 0) {
+        echo "Username and/or password cannot be empty!";
+        die;
+    }
+
     //Check to see if the passwords match (Case sensitive)
     if (strcmp($sPassword, $sConfirmPass) == 0) {
         //create the SQL query string
@@ -24,9 +30,7 @@
         $result = $conn->query($sql);
         if ($result === TRUE) {
         $last_id = $conn->insert_id;
-        echo "Insert successfully. Last inserted ID is: " . $last_id;
-        } else {
-        echo "Error creating database: " . $conn->error;
+            echo $sUsername;
         }
         $conn->close();
     } else {

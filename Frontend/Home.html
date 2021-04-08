@@ -10,11 +10,48 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
         <link rel="stylesheet" href="Home.css">
-        <script src="Home.js"></script>
+        <script>
+			function getImages() {
+				console.log("Hello.");
+				
+				var xhttp = new XMLHttpRequest();
+				xhttp.open("get", "Home.php", true);
+				xhttp.onreadystatechange = function () {
+					if (xhttp.readyState == 4) {
+						if (xhttp.status == 200) {
+							displayImages(xhttp.responseText);
+						}
+					}
+				};
+				xhttp.send(null);
+			}
+
+			function displayImages(result) {
+				var res = result.split("|");
+				
+				var c = 0;
+				var i;
+				for (i = 0; i < res.length; i+=2) {
+					if (res[i].length == 0){
+						break;
+					}
+					var column = document.getElementById("imgColumn" + (c % 5));
+					var builder = "<div class='polaroid'>"
+									+ res[i]
+									+ "<div class='container'>"
+									+ res[i + 1]
+									+ "</div>"
+									+ "</div>";
+					column.innerHTML = column.innerHTML + builder;
+					c++;
+				}
+			}
+		</script>
     </head>
-    <body>
+    <body onload="getImages()">
+	
         <!--Navbar code-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
             <a class="navbar-brand" href="Home.html">Img Social</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -27,36 +64,52 @@
                 </span>
             </div>
         </nav>
-
+		
+		
         <!--Below content code-->
-        <table>
-            <tr>
-              <td>
-                <div class="polaroid">
+        <table id="imgContent" width="100%">
+            <tr style="background-color:#1b262c">
+              <td id="imgColumn0" width="20%" align="center">
+				<div class="polaroid">
                   <img src="./Images/1.jpg" alt="Northern Lights" />
                   <div class="container">
                     <p>Northern Lights</p>
                   </div>
                 </div>
-                <div class="polaroid">
-                  <img src="./Images/2.jpg" alt="5 Terre" />
-                  <div class="container">
-                    <p>Cinque Terre</p>
-                  </div>
-                </div>
               </td>
-              <td>
-                <div class="polaroid">
-                  <img src="./Images/3.jpg" alt="Northern Lights" />
+			  
+              <td id="imgColumn1" width="20%" align="center">
+				<div class="polaroid">
+                  <img src="./Images/1.jpg" alt="Northern Lights" />
                   <div class="container">
                     <p>Northern Lights</p>
                   </div>
                 </div>
-      
-                <div class="polaroid">
-                  <img src="./Images/4.jpg" alt="5 Terre" />
+              </td>
+			  
+			  <td id="imgColumn2" width="20%" align="center">
+			  <div class="polaroid">
+                  <img src="./Images/1.jpg" alt="Northern Lights" />
                   <div class="container">
-                    <p>Cinque Terre</p>
+                    <p>Northern Lights</p>
+                  </div>
+                </div>
+              </td>
+			  
+			  <td id="imgColumn3" width="20%" align="center">
+			  <div class="polaroid">
+                  <img src="./Images/1.jpg" alt="Northern Lights" />
+                  <div class="container">
+                    <p>Northern Lights</p>
+                  </div>
+                </div>
+              </td>
+			  
+			  <td id="imgColumn4" width="20%" align="center">
+			  <div class="polaroid">
+                  <img src="./Images/1.jpg" alt="Northern Lights" />
+                  <div class="container">
+                    <p>Northern Lights</p>
                   </div>
                 </div>
               </td>

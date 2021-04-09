@@ -13,6 +13,7 @@ div.polaroid {
 	margin-top: 25px;
     margin-bottom: 25px;
     border-radius: 8px;
+	cursor: pointer;
 }
 
 img {

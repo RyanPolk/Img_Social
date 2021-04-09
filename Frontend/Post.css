@@ -1,13 +1,18 @@
 /* BASIC */
 
 html {
+	height: 100%;
     background-color: #1b262c;
   }
   
   body {
     font-family: "Poppins", sans-serif;
-    height: 50vh;
+    height: 100%;
     background-color: #1b262c;
+	background-image: url('Images/backgroundtemplate.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed; 
+	background-size: cover;
   }
   
   a {

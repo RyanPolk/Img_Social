@@ -65,14 +65,20 @@
                 var y = document.getElementById("profile");
                 var z = document.getElementById("post");
                 y.innerHTML = currentUser;
-                if (currentUser == "" && currentUser == "Login failed, please try again." && currentUser == "Password's do not match!" && currentUser != "Username and/or password cannot be empty!") {
+                if (currentUser == "" || currentUser == "Login failed, please try again." || currentUser == "Password's do not match!" || currentUser == "Username and/or password cannot be empty!") {
                     x.style.display = "inline";
                     y.style.display = "none";
                     z.style.display = "none";
+                    x.style.visibility = "visible";
+                    y.style.visibility = "hidden";
+                    z.style.visibility = "hidden";
                 } else {
                     x.style.display = "none";
                     y.style.display = "inline";
                     z.style.display = "inline";
+                    x.style.visibility = "hidden";
+                    y.style.visibility = "visible";
+                    z.style.visibility = "visible";
                 }
             }
         }
@@ -92,9 +98,9 @@
               <ul class="navbar-nav mr-auto">
               </ul>
               <span class="navbar-text">
-                  <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c;">Login/Sign up</a>
-                  <a id="post" href="" class="btn btn-primary text-light" style="background-color: #1b262c;">Post</a>
-                  <a id="profile" href="" class="btn btn-primary text-light" style="background-color: #1b262c;">Profile</a>
+                  <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Login or Sign up</a>
+                  <a id="post" href="" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Post</a>
+                  <a id="profile" href="Profile.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Profile</a>
               </span>
           </div>
       </nav>
@@ -156,13 +162,8 @@
         <div class="container p-1">
             <!-- Section: Social media -->
             <section>
-                <!-- Facebook -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                ><i class="fa fa-facebook-f"></i
-                ></a>
-        
                 <!-- Github -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/RyanPolk/Img_Social" role="button"
                 ><i class="fa fa-github"></i
                 ></a>
             </section>

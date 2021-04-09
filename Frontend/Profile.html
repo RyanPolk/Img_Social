@@ -11,52 +11,57 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
         <link rel="icon" type="image/png" href="./Images/ic_logo.png"/>
-        <link rel="stylesheet" href="Login.css">
+        <link rel="stylesheet" href="Profile.css">
         <!-- JavaScript for login and signup -->
         <script>
-            // Takes login parameters and calls login.php
-            function login() {
-                var sUsername = document.getElementById("lUsername").value;
-                var sPassword = document.getElementById("lPassword").value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "Login.php?username=" + sUsername +"&password=" + sPassword, true);
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState == 4) {
-                        if (xhttp.status == 200) {
-                            verified(xhttp.responseText);
-                        }
-                    }
-                };
-                xhttp.send(null);
+            var CURRENT_USER = "";
+            // This function clears the cookies and redirects user home
+            function logout() {
+                document.cookie = "currentUser=; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/";
+                window.location.replace("Home.html");
             }
 
-            // Takes signup parameters and calls signup.php
-            function signup() {
-                var sUsername = document.getElementById("sUsername").value;
-                var sPassword = document.getElementById("sPassword").value;
-                var sConfirmPass = document.getElementById("sConfirmPass").value;
+            // This function takes a username and returns user data
+            function getProfile(username) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "Signup.php?username=" + sUsername +"&password=" + sPassword+"&confirmPass=" + sConfirmPass, true);
+                xhttp.open("get", "ProfileGet.php?username=" + username, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
-                            verified(xhttp.responseText);
+                            writeData(xhttp.responseText);
                         } 
                     }
                 };
                 xhttp.send(null);
             }
 
-            // Displays result string to the screen, writes cookies, and redirects user
-            function verified(result) {
-                // Write cookie and redirect to homepage
-                if (result != "" && result != "Login failed, please try again." && result != "Password's do not match!" && result != "Username and/or password cannot be empty!") {
-                    document.cookie = "currentUser=" + result + "; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/";
-                    window.location.replace("Home.html");
-                }
-                // Write response to screen
-                var divCustomerInfo = document.getElementById("divUserInfo");
-                divCustomerInfo.innerHTML = result;
+            // This function write provided user data to correct positions
+            function writeData(result) {
+                // Split the data
+                var data = result.split(";")
+                // Set the data on screen
+                var doc = document.getElementById("lblProfile");
+                doc.innerHTML = data[0] + "'s Profile";
+                var doc = document.getElementById("lblFirstName");
+                doc.innerHTML = data[1];
+                var doc = document.getElementById("lblDate");
+                doc.innerHTML = data[2].substring(0, 11);
+            }
+
+            // This function sets the user data of provided user
+            function setProfile() {
+                var sFirstName = document.getElementById("firstName").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "ProfileSet.php?username=" + CURRENT_USER +"&firstName=" + sFirstName, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            console.log(xhttp.responseText);
+                            window.location.replace("Profile.html");
+                        } 
+                    }
+                };
+                xhttp.send(null);
             }
 
             //Gets called onLoad, checks to see if the user is logged in
@@ -69,6 +74,7 @@
                     while (c.charAt(0)==' ') c = c.substring(1,c.length);
                     if (c.indexOf(nameEQ) == 0) {
                         var currentUser = c.substring(nameEQ.length,c.length);
+                        CURRENT_USER = currentUser;
                         // Hide login/signup button and unhide post/profile buttons
                         var x = document.getElementById("login");
                         var y = document.getElementById("profile");
@@ -91,6 +97,14 @@
                         }
                     }
                 }
+                // This will need to be changed to view other user's profile
+                getProfile(currentUser)
+            }
+
+            // Shows the hidden elements when called
+            function edit() {
+                var x = document.getElementById("editContent");
+                x.style.display = "inline";
             }
         </script>
     </head>
@@ -121,33 +135,32 @@
                         <div id="formContent">
                             <!-- Title -->
                             <div class="fadeIn first">
-                                <h3>Login</h3>
+                                <h3 id="lblProfile">Profile</h3>
                             </div>
-                        
-                            <!-- Login Controls -->
-                            <input type="text" id="lUsername" class="fadeIn second" name="lUsername" placeholder="Username">
-                            <input type="password" id="lPassword" class="fadeIn third" name="lPassword" placeholder="Password">
-                            <p style="padding-top: 38pt;"></p>
-                            <input type="submit" class="fadeIn fourth" value="Login" onclick="login()">
+                            <img src="./Images/ic_profile.png" alt="Profile" style="width: 60pt;" class="fadeIn first">
+                            <div>
+                                <h4 class="fadeIn second">First Name: </h4>
+                                <h4 id="lblFirstName" class="fadeIn second">Name</h4>
+                            </div>
+                            <div>
+                                <h4 class="fadeIn second">Registered: </h4>
+                                <h4 id="lblDate" class="fadeIn second">Date</h4>
+                            </div>
+                            
+                            <div>
+                                <input type="submit" class="fadeIn fourth" value="Edit" onclick="edit()" style="display: inline;">   
+                                <input type="submit" class="fadeIn fourth" value="Logout" onclick="logout()" style="display: inline;">   
+                            </div>
+                            
+                            <div id="editContent" Style="display: None;">
+                                <!-- Image Browser -->
+                                <input type="text" id="firstName" class="fadeIn first" name="firstName" placeholder="First Name">
+                                <input type="submit" class="fadeIn second" value="Update" onclick="setProfile()" style="display: inline;">
+                            </div>
                         </div>
                       </div>
                 </div>
-                <div class="col">
-                    <div class="wrapper fadeInDown">
-                        <div id="formContent">
-                            <!-- Title -->
-                            <div class="fadeIn first">
-                                <h3>Sign up</h3>
-                            </div>
-                        
-                            <!-- Signup Controls -->
-                            <input type="text" id="sUsername" class="fadeIn second" name="sUsername" placeholder="Username">
-                            <input type="password" id="sPassword" class="fadeIn third" name="sPassword" placeholder="Password">
-                            <input type="password" id="sConfirmPass" class="fadeIn fourth" name="sConfirmPass" placeholder="Confirm Password">
-                            <input type="submit" class="fadeIn fourth" value="Sign up" onclick="signup()">
-                        </div>
-                      </div>
-                </div>
+                
             </div>
         </div>
         

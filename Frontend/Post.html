@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="Post.css">
         <!-- JavaScript for login and signup -->
         <script>
+			var CURRENT_USER = "";
 			function upload(){
 				var sDescription = document.getElementById("inputDes").value;
 				var file = document.getElementById("inputImg").files[0];
@@ -21,7 +22,7 @@
 				console.log(file);
 				
 				var xhttp = new XMLHttpRequest();
-				xhttp.open("post", "Post.php?description=" + sDescription, true);
+				xhttp.open("post", "Post.php?description=" + sDescription + "&username=" + CURRENT_USER, true);
 				xhttp.onreadystatechange = function () {
 					if (xhttp.readyState == 4) {
 						if (xhttp.status == 200) {
@@ -49,6 +50,7 @@
                     while (c.charAt(0)==' ') c = c.substring(1,c.length);
                     if (c.indexOf(nameEQ) == 0) {
                         var currentUser = c.substring(nameEQ.length,c.length);
+						CURRENT_USER = currentUser;
                         // Hide login/signup button and unhide post/profile buttons
                         var x = document.getElementById("login");
                         var y = document.getElementById("profile");

@@ -4,10 +4,31 @@
     //User credentials
     $sUsername = $_GET["username"];
     $sFirstName = $_GET["firstName"];
-
-    //create the SQL query string
-    $sql = "Update users set firstName='".$sFirstName."' where username='".$sUsername."';";
-
+	$file = file_get_contents('php://input');
+	
+	$sql = "";
+	
+	if($file != null and $sFirstName != "") {
+		$fileblob = base64_encode( $file );
+		
+		//create the SQL query string
+		$sql = "Update users set firstName='".$sFirstName."', profileImg='".$fileblob."' where username='".$sUsername."';";
+	}
+	else if($file != null) {
+		$fileblob = base64_encode( $file );
+		
+		//create the SQL query string
+		$sql = "Update users set profileImg='".$fileblob."' where username='".$sUsername."';";
+	}
+	else if($sFirstName != "") {
+		//create the SQL query string
+		$sql = "Update users set firstName='".$sFirstName."' where username='".$sUsername."';";
+	} 
+	else
+	{
+		exit();
+	}
+	
     //database information
     $servername = "localhost";
     $username = "root";

@@ -2,13 +2,13 @@
 
 html {
 	height: 100%;
-    background-color: #1b262c;
+    background-color: #1a252b;
   }
   
   body {
     font-family: "Poppins", sans-serif;
     height: 100%;
-    background-color: #1b262c;
+    background-color: #1a252b;
 	background-image: url('Images/backgroundtemplate.png');
 	background-repeat: no-repeat;
 	background-attachment: fixed; 
@@ -56,7 +56,17 @@ html {
     text-align: center;
     }
   
-  
+ #profileImage {
+  border-radius: 25px;
+  width: auto;
+  max-height: 350px;
+  max-width: 80%;
+  height: auto;
+}
+
+#Profile {
+	margin-bottom: 100px;
+}
   
   /* STRUCTURE */
   

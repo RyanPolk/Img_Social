@@ -10,11 +10,12 @@
         <!--Initialization lines-->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
+		<link rel="icon" type="image/png" href="./Images/ic_logo.png"/>
         <link rel="stylesheet" href="Home.css">
         <script>
 			function getImages() {
-        // Checks to see if the user is logged in
-        checkUser()
+				// Checks to see if the user is logged in
+				checkUser()
 
 				console.log("Hello.");
 				var xhttp = new XMLHttpRequest();
@@ -39,10 +40,12 @@
 						break;
 					}
 					var column = document.getElementById("imgColumn" + (c % 5));
-					var builder = "<div class='polaroid'>"
+					var builder = "<div class='wrapper fadeInDown'>"
+									+ "<div class='polaroid'>"
 									+ res[i]
 									+ "<div class='container'>"
 									+ res[i + 1]
+									+ "</div>"
 									+ "</div>"
 									+ "</div>";
 					column.innerHTML = column.innerHTML + builder;
@@ -104,48 +107,23 @@
         <table id="imgContent" width="100%">
             <tr style="background-color:#1b262c">
               <td id="imgColumn0" width="20%" align="center">
-				<div class="polaroid">
-                  <img src="./Images/1.jpg" alt="Northern Lights" />
-                  <div class="container">
-                    <p>Northern Lights</p>
-                  </div>
-                </div>
+				
               </td>
 			  
               <td id="imgColumn1" width="20%" align="center">
-				<div class="polaroid">
-                  <img src="./Images/1.jpg" alt="Northern Lights" />
-                  <div class="container">
-                    <p>Northern Lights</p>
-                  </div>
-                </div>
+				
               </td>
 			  
 			  <td id="imgColumn2" width="20%" align="center">
-			  <div class="polaroid">
-                  <img src="./Images/1.jpg" alt="Northern Lights" />
-                  <div class="container">
-                    <p>Northern Lights</p>
-                  </div>
-                </div>
+			  
               </td>
 			  
 			  <td id="imgColumn3" width="20%" align="center">
-			  <div class="polaroid">
-                  <img src="./Images/1.jpg" alt="Northern Lights" />
-                  <div class="container">
-                    <p>Northern Lights</p>
-                  </div>
-                </div>
+			  
               </td>
 			  
 			  <td id="imgColumn4" width="20%" align="center">
-			  <div class="polaroid">
-                  <img src="./Images/1.jpg" alt="Northern Lights" />
-                  <div class="container">
-                    <p>Northern Lights</p>
-                  </div>
-                </div>
+			  
               </td>
             </tr>
           </table>

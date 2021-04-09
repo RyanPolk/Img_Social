@@ -38,9 +38,43 @@
 				var element = document.getElementById("lol");
 				// element.innerHTML = result;
 			}
+
+            //Gets called onLoad, checks to see if the user is logged in
+            function checkUser() {
+                // Read Cookie and set navigation buttons
+                var nameEQ = "currentUser=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) {
+                        var currentUser = c.substring(nameEQ.length,c.length);
+                        // Hide login/signup button and unhide post/profile buttons
+                        var x = document.getElementById("login");
+                        var y = document.getElementById("profile");
+                        var z = document.getElementById("post");
+                        y.innerHTML = currentUser;
+                        if (currentUser == "" || currentUser == "Login failed, please try again." || currentUser == "Password's do not match!" || currentUser == "Username and/or password cannot be empty!") {
+                            x.style.display = "inline";
+                            y.style.display = "none";
+                            z.style.display = "none";
+                            x.style.visibility = "visible";
+                            y.style.visibility = "hidden";
+                            z.style.visibility = "hidden";
+                        } else {
+                            x.style.display = "none";
+                            y.style.display = "inline";
+                            z.style.display = "inline";
+                            x.style.visibility = "hidden";
+                            y.style.visibility = "visible";
+                            z.style.visibility = "visible";
+                        }
+                    }
+                }
+            }
         </script>
     </head>
-    <body>
+    <body onload="checkUser()">
         <!--Navbar code-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-info">
             <img class="navbar-brand" href="Home.html" src="./Images/ic_logo.png" style="width: 40pt;"></img>
@@ -52,7 +86,7 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <span class="navbar-text">
-                    <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: visible;">Login/Sign up</a>
+                    <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Login or Sign up</a>
                     <a id="post" href="Post.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Post</a>
                     <a id="profile" href="Profile.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Profile</a>
                 </span>

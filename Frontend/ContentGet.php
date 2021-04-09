@@ -22,7 +22,7 @@
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $sInfo = $row['description'].";".$row['username'].";".$row['posted'].";".$row['postImg'].";";
+            $sInfo = $row['description']."|".$row['username']."|".$row['posted']."|data:image/jpeg;base64,".$row["postImg"]."|";
         }
     }
     $conn->close();

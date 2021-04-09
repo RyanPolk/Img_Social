@@ -19,7 +19,7 @@
             // This function takes a username and returns user data
             function getContent(postID) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "ContentGet.php?postID=" + postID, true);
+                xhttp.open("post", "ContentGet.php?postID=" + postID, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
@@ -33,15 +33,17 @@
             // This function write provided user data to correct positions
             function writeData(result) {
                 // Split the data
-                var data = result.split(";")
+                var data = result.split("|")
                 // Set the data on screen
                 var doc = document.getElementById("lblTitle");
                 doc.innerHTML = data[0];
                 var doc = document.getElementById("lblUser");
-                doc.innerHTML = data[1];
-                var doc = document.getElementById("lblDate");
-                doc.innerHTML = data[2].substring(0, 11);
-                //Need to set the image
+                doc.innerHTML = data[1] + " at " + data[2];
+                // Set the image
+                document.getElementById('postImg')
+                    .setAttribute(
+                        'src', data[3]
+                    );
             }
 
             // This function sets the user data of provided user
@@ -60,7 +62,7 @@
                 xhttp.send(null);
             }
 
-            //Gets called onLoad, checks to see if the user is logged in
+            // Gets called onLoad, checks to see if the user is logged in
             function checkUser() {
                 // Read Cookie and set navigation buttons
                 var nameEQ = "currentUser=";
@@ -93,8 +95,11 @@
                         }
                     }
                 }
-                // This will need to be changed to view other posts
-                getContent(1)
+                // This gets the content for the provided postID
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const postID = urlParams.get('postID')
+                getContent(postID)
             }
 
         </script>
@@ -129,28 +134,20 @@
                                 <h3 id="lblTitle">Title</h3>
                             </div>
 
-                            <div class="container">
-                                <div class="row">
-                                  <div class="col-sm">
-                                    <h4 id="lblUser" class="fadeIn second">Post User</h4>
-                                  </div>
-                                  <div class="col-sm">
-                                    <h4 id="lblDate" class="fadeIn second">Post Date</h4>
-                                  </div>
-                                </div>
+                            <div>
+                                <h4 id="lblUser" class="fadeIn second">Post User</h4>
                             </div>
-
-                            <img id="postImg" src="./Images/ic_profile.png" alt="post" style="width: 250pt; padding-top: 10px; padding-bottom: 20px;" class="fadeIn third">
+                                  
+                            <img id="postImg" src="" alt="post" style="width: 400pt; padding-top: 10px; padding-bottom: 20px;" class="fadeIn third">
+                            
+                            <div>
+                                <h3 class="fadeIn third">Comments</h3>
+                            </div>
 
                             <div>
                                 <input type="text" id="comment" class="fadeIn fourth" name="comment" placeholder="Comment">
                                 <input type="submit" class="fadeIn fourth" value="Post" onclick="setProfile()" style="display: inline;">
                             </div>
-
-                            <div>
-                                <h3>Comments</h3>
-                            </div>
-                        
                         </div>
                       </div>
                 </div>

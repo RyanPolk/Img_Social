@@ -11,20 +11,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
         <link rel="icon" type="image/png" href="./Images/ic_logo.png"/>
-        <link rel="stylesheet" href="Profile.css">
+        <link rel="stylesheet" href="Content.css">
         <!-- JavaScript for login and signup -->
         <script>
             var CURRENT_USER = "";
-            // This function clears the cookies and redirects user home
-            function logout() {
-                document.cookie = "currentUser=; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/";
-                window.location.replace("Home.html");
-            }
 
             // This function takes a username and returns user data
-            function getProfile(username) {
+            function getContent(postID) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "ProfileGet.php?username=" + username, true);
+                xhttp.open("get", "ContentGet.php?postID=" + postID, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
@@ -40,24 +35,25 @@
                 // Split the data
                 var data = result.split(";")
                 // Set the data on screen
-                var doc = document.getElementById("lblProfile");
-                doc.innerHTML = data[0] + "'s Profile";
-                var doc = document.getElementById("lblFirstName");
+                var doc = document.getElementById("lblTitle");
+                doc.innerHTML = data[0];
+                var doc = document.getElementById("lblUser");
                 doc.innerHTML = data[1];
                 var doc = document.getElementById("lblDate");
                 doc.innerHTML = data[2].substring(0, 11);
+                //Need to set the image
             }
 
             // This function sets the user data of provided user
-            function setProfile() {
-                var sFirstName = document.getElementById("firstName").value;
+            function setComment() {
+                var sComment = document.getElementById("comment").value;
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "ProfileSet.php?username=" + CURRENT_USER +"&firstName=" + sFirstName, true);
+                xhttp.open("get", "ContentSet.php?username=" + CURRENT_USER +"&comment=" + sComment, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
                             console.log(xhttp.responseText);
-                            window.location.replace("Profile.html");
+                            window.location.replace("Content.html");
                         } 
                     }
                 };
@@ -97,15 +93,10 @@
                         }
                     }
                 }
-                // This will need to be changed to view other user's profile
-                getProfile(currentUser)
+                // This will need to be changed to view other posts
+                getContent(1)
             }
 
-            // Shows the hidden elements when called
-            function edit() {
-                var x = document.getElementById("editContent");
-                x.style.display = "inline";
-            }
         </script>
     </head>
     <body onload="checkUser()">
@@ -135,28 +126,31 @@
                         <div id="formContent">
                             <!-- Title -->
                             <div class="fadeIn first">
-                                <h3 id="lblProfile">Profile</h3>
+                                <h3 id="lblTitle">Title</h3>
                             </div>
-                            <img src="./Images/ic_profile.png" alt="Profile" style="width: 60pt;" class="fadeIn first">
+
+                            <div class="container">
+                                <div class="row">
+                                  <div class="col-sm">
+                                    <h4 id="lblUser" class="fadeIn second">Post User</h4>
+                                  </div>
+                                  <div class="col-sm">
+                                    <h4 id="lblDate" class="fadeIn second">Post Date</h4>
+                                  </div>
+                                </div>
+                            </div>
+
+                            <img id="postImg" src="./Images/ic_profile.png" alt="post" style="width: 250pt; padding-top: 10px; padding-bottom: 20px;" class="fadeIn third">
+
                             <div>
-                                <h4 class="fadeIn second">First Name: </h4>
-                                <h4 id="lblFirstName" class="fadeIn second">Name</h4>
+                                <input type="text" id="comment" class="fadeIn fourth" name="comment" placeholder="Comment">
+                                <input type="submit" class="fadeIn fourth" value="Post" onclick="setProfile()" style="display: inline;">
                             </div>
+
                             <div>
-                                <h4 class="fadeIn second">Registered: </h4>
-                                <h4 id="lblDate" class="fadeIn second">Date</h4>
+                                <h3>Comments</h3>
                             </div>
-                            
-                            <div>
-                                <input type="submit" class="fadeIn fourth" value="Edit" onclick="edit()" style="display: inline;">   
-                                <input type="submit" class="fadeIn fourth" value="Logout" onclick="logout()" style="display: inline;">   
-                            </div>
-                            
-                            <div id="editContent" Style="display: None;">
-                                <!-- Image Browser -->
-                                <input type="text" id="firstName" class="fadeIn first" name="firstName" placeholder="First Name">
-                                <input type="submit" class="fadeIn second" value="Update" onclick="setProfile()" style="display: inline;">
-                            </div>
+                        
                         </div>
                       </div>
                 </div>

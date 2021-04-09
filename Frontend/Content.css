@@ -35,7 +35,7 @@ html {
 
   h4 {
     padding-top: 5pt;
-    font-size: 14pt;
+    font-size: 12pt;
     color:#ffffff;
     display: inline-block;
 }
@@ -70,8 +70,8 @@ html {
     border-radius: 10px 10px 10px 10px;
     background: #17a2b8;
     padding: 30px;
-    width: 90%;
-    max-width: 450px;
+    width: 100%;
+    max-width: 600px;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);

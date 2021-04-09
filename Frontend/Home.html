@@ -35,13 +35,13 @@
 				
 				var c = 0;
 				var i;
-				for (i = 0; i < res.length; i+=2) {
+				for (i = 0; i < res.length; i+=3) {
 					if (res[i].length == 0){
 						break;
 					}
 					var column = document.getElementById("imgColumn" + (c % 5));
 					var builder = "<div class='wrapper fadeInDown'>"
-									+ "<div class='polaroid'>"
+									+ "<div class='polaroid' onclick=\"polaroidClicked(" + res[i + 2] + ")\">"
 									+ res[i]
 									+ "<div class='container'>"
 									+ res[i + 1]
@@ -51,6 +51,11 @@
 					column.innerHTML = column.innerHTML + builder;
 					c++;
 				}
+			}
+			
+			function polaroidClicked(postID) {
+				// Go to the content page
+				console.log(postID);
 			}
 
       //Gets called onLoad, checks to see if the user is logged in
@@ -102,7 +107,7 @@
               </ul>
               <span class="navbar-text">
                   <a id="login" href="Login.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Login or Sign up</a>
-                  <a id="post" href="" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Post</a>
+                  <a id="post" href="Post.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Post</a>
                   <a id="profile" href="Profile.html" class="btn btn-primary text-light" style="background-color: #1b262c; visibility: hidden;">Profile</a>
               </span>
           </div>

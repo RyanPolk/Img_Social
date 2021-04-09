@@ -97,8 +97,14 @@
                         }
                     }
                 }
-                // This will need to be changed to view other user's profile
-                getProfile(currentUser)
+                // Redirect user if not signed in
+                if (CURRENT_USER == "") {
+                    // Redirect user home
+                    window.location.replace("Home.html");
+                } else {
+                    // This will need to be changed to view other user's profile
+                    getProfile(currentUser)
+                }
             }
 
             // Shows the hidden elements when called

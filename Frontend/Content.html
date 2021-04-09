@@ -15,8 +15,9 @@
         <!-- JavaScript for login and signup -->
         <script>
             var CURRENT_USER = "";
+            var CURRENT_POST = "";
 
-            // This function takes a username and returns user data
+            // This function gets the post content via postID
             function getContent(postID) {
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("post", "ContentGet.php?postID=" + postID, true);
@@ -28,9 +29,10 @@
                     }
                 };
                 xhttp.send(null);
+                getComments(postID);
             }
 
-            // This function write provided user data to correct positions
+            // This function write provided data to correct positions
             function writeData(result) {
                 // Split the data
                 var data = result.split("|")
@@ -46,16 +48,45 @@
                     );
             }
 
-            // This function sets the user data of provided user
-            function setComment() {
-                var sComment = document.getElementById("comment").value;
+            // This function gets the comment content via postID
+            function getComments(postID) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "ContentSet.php?username=" + CURRENT_USER +"&comment=" + sComment, true);
+                xhttp.open("get", "CommentsGet.php?postID=" + postID, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
-                            console.log(xhttp.responseText);
-                            window.location.replace("Content.html");
+                            var result = JSON.parse(xhttp.responseText);
+                            writeComments(result);
+                        } 
+                    }
+                };
+                xhttp.send(null);
+            }
+
+            // This function write provided data to correct positions
+            function writeComments(result) {
+                for (i=0; i<result.length; i++) {
+                    // Split the data
+                    var data = result[i].split("|")
+                    var div = document.getElementById("commentsDiv");
+                    // Set the data on screen
+                    var comment = data[0] + " - " + data[2] + " on " + data[1];
+                    var h = document.createElement("H5")  
+                    var commentNode = document.createTextNode(comment)
+                    h.appendChild(commentNode);
+                    div.appendChild(h);
+                }
+            }
+
+            // This function posts the comment
+            function postComment() {
+                var sComment = document.getElementById("comment").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "CommentsSet.php?username=" + CURRENT_USER +"&postID=" + CURRENT_POST+"&comment=" + sComment, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            window.location.replace("Content.html?postID=" + CURRENT_POST);
                         } 
                     }
                 };
@@ -77,6 +108,7 @@
                         var x = document.getElementById("login");
                         var y = document.getElementById("profile");
                         var z = document.getElementById("post");
+                        var hiddenCon = document.getElementById("hiddenContent");
                         y.innerHTML = currentUser;
                         if (currentUser == "" || currentUser == "Login failed, please try again." || currentUser == "Password's do not match!" || currentUser == "Username and/or password cannot be empty!") {
                             x.style.display = "inline";
@@ -85,6 +117,7 @@
                             x.style.visibility = "visible";
                             y.style.visibility = "hidden";
                             z.style.visibility = "hidden";
+                            hiddenCon.style.display = "none";
                         } else {
                             x.style.display = "none";
                             y.style.display = "inline";
@@ -92,14 +125,16 @@
                             x.style.visibility = "hidden";
                             y.style.visibility = "visible";
                             z.style.visibility = "visible";
+                            hiddenCon.style.display = "inline";
                         }
                     }
                 }
-                // This gets the content for the provided postID
+                // Get the postID provided in URL and call getContent
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);
-                const postID = urlParams.get('postID')
-                getContent(postID)
+                const postID = urlParams.get('postID');
+                CURRENT_POST = postID;
+                getContent(postID);
             }
 
         </script>
@@ -124,7 +159,7 @@
         </nav>
 
         <!--Below content code-->
-        <div class="container" style="background-color: #1b262c;">
+        <div class="container" id="Content" style="background-color: #1b262c;">
             <div class="row">
                 <div class="col">
                     <div class="wrapper fadeInDown">
@@ -138,15 +173,18 @@
                                 <h4 id="lblUser" class="fadeIn second">Post User</h4>
                             </div>
                                   
-                            <img id="postImg" src="" alt="post" style="width: 400pt; padding-top: 10px; padding-bottom: 20px;" class="fadeIn third">
+                            <img id="postImg" src="" alt="post" style="width: 400pt; padding-top: 10px; padding-bottom: 10px;" class="fadeIn third">
                             
                             <div>
                                 <h3 class="fadeIn third">Comments</h3>
                             </div>
 
-                            <div>
+                            <div id="hiddenContent">
                                 <input type="text" id="comment" class="fadeIn fourth" name="comment" placeholder="Comment">
-                                <input type="submit" class="fadeIn fourth" value="Post" onclick="setProfile()" style="display: inline;">
+                                <input type="submit" class="fadeIn fourth" value="Post" onclick="postComment()" style="display: inline;">
+                            </div>
+
+                            <div id="commentsDiv" style="padding-left: 5px; background-color: #1b262c; width: 90%; margin:0 auto; border-radius: 5px; border-color: white;">
                             </div>
                         </div>
                       </div>

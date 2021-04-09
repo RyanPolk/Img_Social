@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="Post.css">
         <!-- JavaScript for login and signup -->
         <script>
+            var CURRENT_USER = "";
 			function upload(){
 				var sDescription = document.getElementById("inputDes").value;
 				var file = document.getElementById("inputImg").files[0];
@@ -49,6 +50,7 @@
                     while (c.charAt(0)==' ') c = c.substring(1,c.length);
                     if (c.indexOf(nameEQ) == 0) {
                         var currentUser = c.substring(nameEQ.length,c.length);
+                        CURRENT_USER = currentUser;
                         // Hide login/signup button and unhide post/profile buttons
                         var x = document.getElementById("login");
                         var y = document.getElementById("profile");
@@ -70,6 +72,10 @@
                             z.style.visibility = "visible";
                         }
                     }
+                }
+                // Redirect user home if they are not signed in
+                if (CURRENT_USER == "") {
+                    window.location.replace("Home.html");
                 }
             }
         </script>

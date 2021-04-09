@@ -14,6 +14,11 @@ div.polaroid {
     margin-bottom: 25px;
     border-radius: 8px;
 	cursor: pointer;
+	transition: transform .2s; /* Animation */
+}
+
+.polaroid:hover {
+  transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 img {

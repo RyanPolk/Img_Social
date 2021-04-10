@@ -14,7 +14,11 @@
         <link rel="stylesheet" href="Post.css">
         <!-- JavaScript for login and signup -->
         <script>
+<<<<<<< HEAD
             var CURRENT_USER = "";
+=======
+			var CURRENT_USER = "";
+>>>>>>> chloe
 			function upload(){
 				var sDescription = document.getElementById("inputDes").value;
 				var file = document.getElementById("inputImg").files[0];
@@ -22,7 +26,7 @@
 				console.log(file);
 				
 				var xhttp = new XMLHttpRequest();
-				xhttp.open("post", "Post.php?description=" + sDescription, true);
+				xhttp.open("post", "Post.php?description=" + sDescription + "&username=" + CURRENT_USER, true);
 				xhttp.onreadystatechange = function () {
 					if (xhttp.readyState == 4) {
 						if (xhttp.status == 200) {

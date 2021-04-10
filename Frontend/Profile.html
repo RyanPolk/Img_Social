@@ -46,13 +46,20 @@
                 doc.innerHTML = data[1];
                 var doc = document.getElementById("lblDate");
                 doc.innerHTML = data[2].substring(0, 11);
+				var doc = document.getElementById("profileImg");
+				doc.innerHTML = '<img id=\"profileImage\" src="data:image/jpeg;base64,' + data[3] + '"/>'
             }
 
             // This function sets the user data of provided user
             function setProfile() {
                 var sFirstName = document.getElementById("firstName").value;
+				var file = null;
+				if (document.getElementById("profileImgInput").files.length != 0) {
+					var file = document.getElementById("profileImgInput").files[0];
+				}
+				
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "ProfileSet.php?username=" + CURRENT_USER +"&firstName=" + sFirstName, true);
+                xhttp.open("post", "ProfileSet.php?username=" + CURRENT_USER +"&firstName=" + sFirstName, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
@@ -61,7 +68,7 @@
                         } 
                     }
                 };
-                xhttp.send(null);
+                xhttp.send(file);
             }
 
             //Gets called onLoad, checks to see if the user is logged in
@@ -134,7 +141,7 @@
         </nav>
 
         <!--Below content code-->
-        <div class="container">
+        <div class="container" id="Profile">
             <div class="row">
                 <div class="col">
                     <div class="wrapper fadeInDown">
@@ -143,7 +150,9 @@
                             <div class="fadeIn first">
                                 <h3 id="lblProfile">Profile</h3>
                             </div>
-                            <img src="./Images/ic_profile.png" alt="Profile" style="width: 60pt;" class="fadeIn first">
+							<div id="profileImg">
+								<img src="./Images/ic_profile.png" alt="Profile" style="width: 60pt;" class="fadeIn first">
+							</div>
                             <div>
                                 <h4 class="fadeIn second">First Name: </h4>
                                 <h4 id="lblFirstName" class="fadeIn second">Name</h4>
@@ -159,9 +168,22 @@
                             </div>
                             
                             <div id="editContent" Style="display: None;">
+								<div>
+									<div>
+										<h4 class="fadeIn first">Change your profile picture!</h4>
+									</div>
+									
+									<div>
+										<input type="file" id="profileImgInput" class="fadeIn first" name="profileImgInput" accept="image/*">
+									</div>
+								</div>
+								
+								
+								<p style="padding-top: 8pt;"></p>
                                 <!-- Image Browser -->
-                                <input type="text" id="firstName" class="fadeIn first" name="firstName" placeholder="First Name">
-                                <input type="submit" class="fadeIn second" value="Update" onclick="setProfile()" style="display: inline;">
+                                <input type="text" id="firstName" class="fadeIn second" name="firstName" placeholder="First Name">
+								<p style="padding-top: 8pt;"></p>
+                                <input type="submit" class="fadeIn third" value="Update" onclick="setProfile()" style="display: inline;">
                             </div>
                         </div>
                       </div>

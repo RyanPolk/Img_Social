@@ -66,12 +66,21 @@
 
             // This function write provided data to correct positions
             function writeComments(result) {
+                var count = result.length;
+                var doc = document.getElementById("commentNum");
+                doc.innerText = count + " Comments";
                 for (i=0; i<result.length; i++) {
                     // Split the data
                     var data = result[i].split("|")
                     var div = document.getElementById("commentsDiv");
-                    // Set the data on screen
-                    var comment = data[0] + " - " + data[2] + " on " + data[1];
+                    // Set the author and date
+                    var comment = data[2] + " - " + data[1];
+                    var h = document.createElement("H1")  
+                    var commentNode = document.createTextNode(comment)
+                    h.appendChild(commentNode);
+                    div.appendChild(h);
+                    // Set the comment
+                    var comment = data[0];
                     var h = document.createElement("H5")  
                     var commentNode = document.createTextNode(comment)
                     h.appendChild(commentNode);
@@ -110,6 +119,7 @@
                         var y = document.getElementById("profile");
                         var z = document.getElementById("post");
                         var hiddenCon = document.getElementById("hiddenContent");
+                        var btnLike = document.getElementById("btnLike");
                         y.innerHTML = currentUser;
                         if (currentUser == "" || currentUser == "Login failed, please try again." || currentUser == "Password's do not match!" || currentUser == "Username and/or password cannot be empty!") {
                             x.style.display = "inline";
@@ -119,6 +129,7 @@
                             y.style.visibility = "hidden";
                             z.style.visibility = "hidden";
                             hiddenCon.style.display = "none";
+                            btnLike.style.display = "none";
                         } else {
                             x.style.display = "none";
                             y.style.display = "inline";
@@ -127,6 +138,7 @@
                             y.style.visibility = "visible";
                             z.style.visibility = "visible";
                             hiddenCon.style.display = "inline";
+                            btnLike.style.display = "inline";
                         }
                     }
                 }
@@ -136,6 +148,36 @@
                 const postID = urlParams.get('postID');
                 CURRENT_POST = postID;
                 getContent(postID);
+                likesGet();
+            }
+
+            // This function gets the likes for the post and prints to screen
+            function likesGet() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "LikesGet.php?postID=" + CURRENT_POST, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            var like = document.getElementById("likes");
+                            like.innerHTML = xhttp.responseText + " Likes";
+                        } 
+                    }
+                };
+                xhttp.send(null);
+            }
+
+            // This function adds a like to the post
+            function likesSet() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("get", "LikesSet.php?username=" + CURRENT_USER +"&postID=" + CURRENT_POST, true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4) {
+                        if (xhttp.status == 200) {
+                            likesGet();
+                        } 
+                    }
+                };
+                xhttp.send(null);
             }
 
         </script>
@@ -173,11 +215,16 @@
                             <div>
                                 <a href="" style="color:white;" id="lblUser" class="fadeIn second">Post User</a>
                             </div>
-                                  
-                            <img id="postImg" src="" alt="post" class="fadeIn third">
-                            
+
                             <div>
-                                <h3 class="fadeIn third">Comments</h3>
+                                <h4 id="likes" class="fadeIn third"></h4>
+                                <img id="btnLike" src="./Images/ic_like.png" alt="Like" class="fadeIn third" onclick="likesSet()" style="width: 5%;">
+                            </div>
+
+                            <img id="postImg" src="" alt="post" class="fadeIn third">
+
+                            <div>
+                                <h4 id="commentNum" class="fadeIn third">Comments</h4>
                             </div>
 
                             <div id="hiddenContent">

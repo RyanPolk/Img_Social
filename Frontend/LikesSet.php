@@ -28,7 +28,7 @@
     }
 
     //Create the SQL query string
-    $sql = "SELECT userID FROM likes WHERE userID='".$sUserID."';";
+    $sql = "SELECT userID FROM likes WHERE userID=".$sUserID." AND postID=".$sPostID.";";
     if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {

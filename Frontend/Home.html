@@ -16,9 +16,11 @@
 			function getImages() {
 				// Checks to see if the user is logged in
 				checkUser()
-
+                // Get the search query
+                // var sSearch = document.getElementById("search").value;
+                var sSearch = "";
 				var xhttp = new XMLHttpRequest();
-				xhttp.open("get", "Home.php", true);
+				xhttp.open("get", "Home.php?search=" + sSearch, true);
 				xhttp.onreadystatechange = function () {
 					if (xhttp.readyState == 4) {
 						if (xhttp.status == 200) {
@@ -101,6 +103,12 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
+
+          <!-- <div style="width:50%; margin: 0 auto; display:inline-block">
+            <input type="text" id="search" class="fadeIn first" name="search" placeholder="Search">
+            <input type="submit" class="fadeIn first" value="Search" onclick="getImages()" style="display: inline;">
+          </div> -->
+
           <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav mr-auto">
               </ul>
@@ -111,6 +119,8 @@
               </span>
           </div>
       </nav>
+
+      
 		
 		
         <!--Below content code-->

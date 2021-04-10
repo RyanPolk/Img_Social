@@ -1,17 +1,17 @@
 /* BASIC */
 
 html {
-    background-color: #1a252b;
 	height: 100%;
+    background-color: #1a252b;
   }
   
   body {
     font-family: "Poppins", sans-serif;
     height: 100%;
     background-color: #1a252b;
-	background-image: url('Images/backgroundtemplategradient.png');
+	background-image: url('Images/backgroundtemplate.png');
 	background-repeat: no-repeat;
-	background-attachment: static; 
+	background-attachment: fixed; 
 	background-size: contain;
   }
   
@@ -40,16 +40,9 @@ html {
 
   h4 {
     padding-top: 5pt;
-    font-size: 12pt;
+    font-size: 14pt;
     color:#ffffff;
     display: inline-block;
-}
-
-h5 {
-    font-size: 10pt;
-    color:#ffffff;
-    text-align: left;
-    padding-top: 5pt;
 }
 
   footer {
@@ -61,20 +54,19 @@ h5 {
     font-weight: bold;
     color: black;
     text-align: center;
-    padding-left: 50px;
     }
-	
-#postImg {
-	border-radius: 25px;
-	padding-bottom: 10px;
-	padding-top: 10px; 
-	width: auto;
-	height: auto;
-	max-height: 500px;
-	max-width: 500px;
+  
+ #profileImage {
+  border-radius: 25px;
+  width: auto;
+  max-height: 350px;
+  max-width: 80%;
+  height: auto;
 }
-  
-  
+
+#Profile {
+	margin-bottom: 100px;
+}
   
   /* STRUCTURE */
   
@@ -93,8 +85,8 @@ h5 {
     border-radius: 10px 10px 10px 10px;
     background: #17a2b8;
     padding: 30px;
-    width: 100%;
-    max-width: 600px;
+    width: 90%;
+    max-width: 450px;
     position: relative;
     padding: 0px;
     -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
@@ -111,9 +103,7 @@ h5 {
     border-radius: 0 0 10px 10px;
   }
   
-  #Content {
-	  margin-bottom: 100px;
-  }
+  
   
   /* TABS */
   
@@ -174,7 +164,7 @@ h5 {
     display: inline-block;
     font-size: 16px;
     margin: 5px;
-    width: 70%;
+    width: 75%;
     border: 2px solid #ffffff;
     -webkit-transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;

@@ -11,16 +11,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Img Social</title>
         <link rel="icon" type="image/png" href="./Images/ic_logo.png"/>
-        <link rel="stylesheet" href="Content.css">
+        <link rel="stylesheet" href="Account.css">
         <!-- JavaScript for login and signup -->
         <script>
             var CURRENT_USER = "";
-            var CURRENT_POST = "";
-
-            // This function gets the post content via postID
-            function getContent(postID) {
+			var OTHER_USER = "";
+            // This function takes a username and returns user data
+            function getProfile(username) {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("post", "ContentGet.php?postID=" + postID, true);
+                xhttp.open("get", "AccountGet.php?username=" + username, true);
                 xhttp.onreadystatechange = function () {
                     if (xhttp.readyState == 4) {
                         if (xhttp.status == 200) {
@@ -29,72 +28,24 @@
                     }
                 };
                 xhttp.send(null);
-                getComments(postID);
             }
 
-            // This function write provided data to correct positions
+            // This function write provided user data to correct positions
             function writeData(result) {
                 // Split the data
-                var data = result.split("|")
+                var data = result.split(";")
                 // Set the data on screen
-                var doc = document.getElementById("lblTitle");
-                doc.innerHTML = data[0];
-                var doc = document.getElementById("lblUser");
-                doc.innerHTML = data[1] + " at " + data[2];
-				doc.setAttribute('href',"Account.html?username=" + data[1]);
-                // Set the image
-                document.getElementById('postImg')
-                    .setAttribute(
-                        'src', data[3]
-                    );
+                var doc = document.getElementById("lblProfile");
+                doc.innerHTML = data[0] + "'s Profile";
+                var doc = document.getElementById("lblFirstName");
+                doc.innerHTML = data[1];
+                var doc = document.getElementById("lblDate");
+                doc.innerHTML = data[2].substring(0, 11);
+				var doc = document.getElementById("profileImg");
+				doc.innerHTML = '<img id=\"profileImage\" src="data:image/jpeg;base64,' + data[3] + '"/>'
             }
 
-            // This function gets the comment content via postID
-            function getComments(postID) {
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "CommentsGet.php?postID=" + postID, true);
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState == 4) {
-                        if (xhttp.status == 200) {
-                            var result = JSON.parse(xhttp.responseText);
-                            writeComments(result);
-                        } 
-                    }
-                };
-                xhttp.send(null);
-            }
-
-            // This function write provided data to correct positions
-            function writeComments(result) {
-                for (i=0; i<result.length; i++) {
-                    // Split the data
-                    var data = result[i].split("|")
-                    var div = document.getElementById("commentsDiv");
-                    // Set the data on screen
-                    var comment = data[0] + " - " + data[2] + " on " + data[1];
-                    var h = document.createElement("H5")  
-                    var commentNode = document.createTextNode(comment)
-                    h.appendChild(commentNode);
-                    div.appendChild(h);
-                }
-            }
-
-            // This function posts the comment
-            function postComment() {
-                var sComment = document.getElementById("comment").value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("get", "CommentsSet.php?username=" + CURRENT_USER +"&postID=" + CURRENT_POST+"&comment=" + sComment, true);
-                xhttp.onreadystatechange = function () {
-                    if (xhttp.readyState == 4) {
-                        if (xhttp.status == 200) {
-                            window.location.replace("Content.html?postID=" + CURRENT_POST);
-                        } 
-                    }
-                };
-                xhttp.send(null);
-            }
-
-            // Gets called onLoad, checks to see if the user is logged in
+            //Gets called onLoad, checks to see if the user is logged in
             function checkUser() {
                 // Read Cookie and set navigation buttons
                 var nameEQ = "currentUser=";
@@ -109,7 +60,6 @@
                         var x = document.getElementById("login");
                         var y = document.getElementById("profile");
                         var z = document.getElementById("post");
-                        var hiddenCon = document.getElementById("hiddenContent");
                         y.innerHTML = currentUser;
                         if (currentUser == "" || currentUser == "Login failed, please try again." || currentUser == "Password's do not match!" || currentUser == "Username and/or password cannot be empty!") {
                             x.style.display = "inline";
@@ -118,7 +68,6 @@
                             x.style.visibility = "visible";
                             y.style.visibility = "hidden";
                             z.style.visibility = "hidden";
-                            hiddenCon.style.display = "none";
                         } else {
                             x.style.display = "none";
                             y.style.display = "inline";
@@ -126,16 +75,16 @@
                             x.style.visibility = "hidden";
                             y.style.visibility = "visible";
                             z.style.visibility = "visible";
-                            hiddenCon.style.display = "inline";
                         }
                     }
                 }
-                // Get the postID provided in URL and call getContent
+				// Get the postID provided in URL and call getContent
                 const queryString = window.location.search;
                 const urlParams = new URLSearchParams(queryString);
-                const postID = urlParams.get('postID');
-                CURRENT_POST = postID;
-                getContent(postID);
+                const username = urlParams.get('username');
+                OTHER_USER = username;
+				
+				getProfile(OTHER_USER);
             }
 
         </script>
@@ -160,35 +109,28 @@
         </nav>
 
         <!--Below content code-->
-        <div class="container" id="Content">
+        <div class="container" id="Profile">
             <div class="row">
                 <div class="col">
                     <div class="wrapper fadeInDown">
                         <div id="formContent">
                             <!-- Title -->
                             <div class="fadeIn first">
-                                <h3 id="lblTitle">Title</h3>
+                                <h3 id="lblProfile">Profile</h3>
                             </div>
-
+							<div id="profileImg">
+								<img src="./Images/ic_profile.png" alt="Profile" style="width: 60pt;" class="fadeIn first">
+							</div>
                             <div>
-                                <a href="" style="color:white;" id="lblUser" class="fadeIn second">Post User</a>
+                                <h4 class="fadeIn second">First Name: </h4>
+                                <h4 id="lblFirstName" class="fadeIn second">Name</h4>
                             </div>
-                                  
-                            <img id="postImg" src="" alt="post" class="fadeIn third">
-                            
                             <div>
-                                <h3 class="fadeIn third">Comments</h3>
-                            </div>
-
-                            <div id="hiddenContent">
-                                <input type="text" id="comment" class="fadeIn fourth" name="comment" placeholder="Comment">
-                                <input type="submit" class="fadeIn fourth" value="Post" onclick="postComment()" style="display: inline;">
-                            </div>
-
-                            <div id="commentsDiv" class="fadeIn fourth" style="padding-left: 5px; background-color: #1b262c; width: 90%; margin:0 auto; border-radius: 5px;">
+                                <h4 class="fadeIn second">Registered: </h4>
+                                <h4 id="lblDate" class="fadeIn second">Date</h4>
                             </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>

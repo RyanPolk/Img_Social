@@ -13,7 +13,7 @@ $dbname = "img_social";
 $db = mysqli_connect($servername,$username,$password,$dbname); //keep your db name
 
 
-$sql = "SELECT * FROM posts";
+$sql = "SELECT * FROM posts ORDER BY posted DESC";
 $sth = $db->query($sql);
 
 // $result=mysqli_fetch_array($sth);

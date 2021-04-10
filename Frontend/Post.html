@@ -17,9 +17,12 @@
             var CURRENT_USER = "";
 			function upload(){
 				var sDescription = document.getElementById("inputDes").value;
-				var file = document.getElementById("inputImg").files[0];
+				var file = null;
+				if (document.getElementById("inputImg").files.length != 0) {
+					var file = document.getElementById("inputImg").files[0];
+				}
 				
-				console.log(file);
+				console.log(sDescription);
 				
 				var xhttp = new XMLHttpRequest();
 				xhttp.open("post", "Post.php?description=" + sDescription + "&username=" + CURRENT_USER, true);
@@ -38,6 +41,7 @@
 				console.log(result);
 				var element = document.getElementById("lol");
 				// element.innerHTML = result;
+				window.location.replace("Home.html");
 			}
 
             //Gets called onLoad, checks to see if the user is logged in
@@ -107,7 +111,6 @@
 					<input type="file" id="inputImg" class="fadeIn second" name="inputImg" accept="image/*">
 					<p style="padding-top: 8pt;"></p>
 					<h3 class="fadeIn third">Your Description</h3>
-					
 					<textarea id="inputDes" width="100%" name="inputDes" class="fadeIn third" rows="3" style="resize: none;"> </textarea>
 					<p style="padding-top: 38pt;"></p>
 					<input type="submit" class="fadeIn fourth" value="Submit" onclick="upload()">
@@ -121,11 +124,6 @@
             <div class="container p-1">
                 <!-- Section: Social media -->
                 <section>
-                    <!-- Facebook -->
-                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
-                    ><i class="fa fa-facebook-f"></i
-                    ></a>
-            
                     <!-- Github -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
                     ><i class="fa fa-github"></i

@@ -2,6 +2,11 @@
     //User credentials
     $sDescription = $_GET["description"];
     $file = file_get_contents('php://input');
+	
+	if($file == null or $sDescription == " ") {
+		die;
+	}
+	
 	$fileblob = base64_encode( $file );
 	$user = $_GET["username"];
 	$userid = -1;
